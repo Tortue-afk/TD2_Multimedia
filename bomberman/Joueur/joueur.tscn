@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://dqmcr6qhr4p40"]
+
+[node name="Joueur" type="MeshInstance3D" unique_id=1892910038]

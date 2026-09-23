@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://p2apn36slili"]
+
+[ext_resource type="PackedScene" uid="uid://dqmcr6qhr4p40" path="res://Joueur/joueur.tscn" id="1_3uo7q"]
+
+[node name="Bomberman" type="Node3D" unique_id=1386755976]
+
+[node name="Joueur" parent="." unique_id=1892910038 instance=ExtResource("1_3uo7q")]
