@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://p7i0xbp68evi"]
+
+[ext_resource type="PackedScene" uid="uid://cdxn8uipos4no" path="res://Map/mur_destructible.tscn" id="1_c0o5c"]
+[ext_resource type="PackedScene" uid="uid://cjf4d0flv1e8u" path="res://Map/mur_indestructible.tscn" id="2_d7y52"]
+[ext_resource type="PackedScene" uid="uid://c4pqud5xlu8bo" path="res://Map/sol.tscn" id="3_651m8"]
+
+[node name="LibTemp" type="Node3D" unique_id=1979833907]
+
+[node name="MurDestructible" parent="." unique_id=646659064 instance=ExtResource("1_c0o5c")]
+
+[node name="MurIndestructible" parent="." unique_id=653890955 instance=ExtResource("2_d7y52")]
+
+[node name="Sol" parent="." unique_id=1455326449 instance=ExtResource("3_651m8")]
