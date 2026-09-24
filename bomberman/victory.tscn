@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cy0k8emc7q51m"]
+
+[ext_resource type="Script" uid="uid://bur3jxaqwuju" path="res://victory.gd" id="1_7bnjr"]
+
+[node name="Victory" type="Control" unique_id=842076753]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7bnjr")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1410469250]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="." unique_id=1331403383]
+layout_mode = 0
+offset_left = 468.0
+offset_top = 158.0
+offset_right = 716.0
+offset_bottom = 227.0
+theme_override_font_sizes/font_size = 50
+text = "VICTOIRE !"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BoutonRejouer" type="Button" parent="." unique_id=319541536]
+layout_mode = 0
+offset_left = 489.0
+offset_top = 358.0
+offset_right = 672.0
+offset_bottom = 423.0
+theme_override_font_sizes/font_size = 25
+text = "Rejouer"
