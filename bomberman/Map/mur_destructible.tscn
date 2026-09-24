@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://cdxn8uipos4no"]
+
+[ext_resource type="Script" uid="uid://cqrqvpthealax" path="res://Map/mur_destructible.gd" id="1_e18dr"]
+[ext_resource type="Texture2D" uid="uid://dxgbd2w8bofdp" path="res://assets/kenney_block-pack/PNG/Default (64px)/tileDirt.png" id="2_vqu8c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bxc3v"]
+albedo_texture = ExtResource("2_vqu8c")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_3uo7q"]
+material = SubResource("StandardMaterial3D_bxc3v")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x8p52"]
+
+[node name="MurDestructible" type="StaticBody3D" unique_id=646659064]
+script = ExtResource("1_e18dr")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1765692000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_3uo7q")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1976248427]
+shape = SubResource("BoxShape3D_x8p52")

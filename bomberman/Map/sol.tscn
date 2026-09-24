@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c4pqud5xlu8bo"]
+
+[ext_resource type="Texture2D" uid="uid://blec0xpk6nrf3" path="res://assets/kenney_block-pack/PNG/Default (64px)/gravel_grey.png" id="1_4ebk4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j5r4l"]
+albedo_texture = ExtResource("1_4ebk4")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_r02yw"]
+material = SubResource("StandardMaterial3D_j5r4l")
+size = Vector3(1, 0.1, 1)
+
+[node name="Sol" type="Node3D" unique_id=1455326449]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=427576619]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+mesh = SubResource("BoxMesh_r02yw")

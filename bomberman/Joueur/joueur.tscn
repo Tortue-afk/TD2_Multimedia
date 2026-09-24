@@ -76,7 +76,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1mpg8")
 }],
-"loop": 1,
+"loop": true,
 "name": &"idle_back",
 "speed": 5.0
 }, {
@@ -87,7 +87,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4k3p5")
 }],
-"loop": 1,
+"loop": true,
 "name": &"idle_front",
 "speed": 5.0
 }, {
@@ -98,7 +98,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iy7a6")
 }],
-"loop": 1,
+"loop": true,
 "name": &"idle_left",
 "speed": 5.0
 }, {
@@ -109,7 +109,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6pdtf")
 }],
-"loop": 1,
+"loop": true,
 "name": &"idle_right",
 "speed": 5.0
 }, {
@@ -120,7 +120,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x8a0q")
 }],
-"loop": 1,
+"loop": true,
 "name": &"run_bottom",
 "speed": 5.0
 }, {
@@ -131,7 +131,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kywmy")
 }],
-"loop": 1,
+"loop": true,
 "name": &"run_left",
 "speed": 5.0
 }, {
@@ -142,7 +142,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aoa1h")
 }],
-"loop": 1,
+"loop": true,
 "name": &"run_right",
 "speed": 5.0
 }, {
@@ -153,7 +153,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x56n0")
 }],
-"loop": 1,
+"loop": true,
 "name": &"run_top",
 "speed": 5.0
 }]
@@ -162,10 +162,11 @@ animations = [{
 size = Vector3(0.5542183, 0.8700981, 0.8920831)
 
 [node name="Joueur" type="CharacterBody3D" unique_id=2103547942]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("1_l4fat")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=358735491]
-transform = Transform3D(0.9999756, 0.0022613518, -0.0066048685, 0, 0.94608533, 0.32391742, 0.00698126, -0.32390952, 0.9460623, -0.17385983, 2.5535717, 4.55132)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 5, 0)
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="." unique_id=1069382927]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)

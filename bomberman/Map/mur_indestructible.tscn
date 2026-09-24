@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://cjf4d0flv1e8u"]
+
+[ext_resource type="Texture2D" uid="uid://d3fmbyldofpqj" path="res://assets/kenney_block-pack/PNG/Double (128px)/tileCastle.png" id="1_qwfu2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_3uo7q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xo4g"]
+albedo_texture = ExtResource("1_qwfu2")
+uv1_triplanar = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x8p52"]
+
+[node name="MurIndestructible" type="StaticBody3D" unique_id=646659064]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1765692000]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("BoxMesh_3uo7q")
+surface_material_override/0 = SubResource("StandardMaterial3D_0xo4g")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1976248427]
+shape = SubResource("BoxShape3D_x8p52")
