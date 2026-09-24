@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+@export_enum("Joueur 1", "Joueur 2") var joueur := 0
+
 signal vie_perdue(vies_restantes: int)
 signal mort
 
@@ -8,16 +10,32 @@ const SPEED = 5.0
 @export var vies_max: int = 3
 var vies: int
 var position_depart: Vector3
+var prefixe_input := "ui"
+
+var actif := true
+var _layer_initial: int
+var _mask_initial: int
 
 @onready var animated_sprite_3d = $AnimatedSprite3D
 
 func _ready() -> void:
+	if joueur == 1:
+		animated_sprite_3d.modulate = Color(0.3, 0.6, 1.0)
+		prefixe_input = "p2"
+	else:
+		animated_sprite_3d.modulate = Color.WHITE
+		prefixe_input = "ui"
+
 	vies = vies_max
 	position_depart = global_position
+	_layer_initial = collision_layer
+	_mask_initial = collision_mask
 
 func _physics_process(delta: float) -> void:
-	# Direction voulue par le joueur
-	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	# Direction voulue par ce joueur (touches selon l'enum)
+	var input_dir := Input.get_vector(
+		prefixe_input + "_left", prefixe_input + "_right",
+		prefixe_input + "_up", prefixe_input + "_down")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
 	# Mettre à jour les animations en fonction de la direction
@@ -64,3 +82,17 @@ func perdre_vie() -> void:
 func reapparaitre() -> void:
 	velocity = Vector3.ZERO
 	global_position = position_depart
+
+func desactiver() -> void:
+	actif = false
+	visible = false
+	process_mode = Node.PROCESS_MODE_DISABLED
+	collision_layer = 0
+	collision_mask = 0
+
+func activer() -> void:
+	actif = true
+	visible = true
+	process_mode = Node.PROCESS_MODE_INHERIT
+	collision_layer = _layer_initial
+	collision_mask = _mask_initial

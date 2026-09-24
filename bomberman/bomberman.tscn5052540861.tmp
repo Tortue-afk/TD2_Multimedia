@@ -15,7 +15,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.625349, 0, 0)
 
 [node name="Joueur2" parent="." unique_id=1039252776 instance=ExtResource("1_3uo7q")]
 visible = false
-joueur = 1
 
 [node name="Player2Label" type="Label" parent="." unique_id=193826176]
 offset_left = 931.0
