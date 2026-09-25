@@ -162,7 +162,6 @@ animations = [{
 size = Vector3(0.5542183, 0.8700981, 0.8920831)
 
 [node name="Joueur" type="CharacterBody3D" unique_id=2103547942]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 script = ExtResource("1_l4fat")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=358735491]
@@ -174,6 +173,7 @@ billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_x8p52")
 animation = &"run_left"
+frame_progress = 0.8566561
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1778704387]
 shape = SubResource("BoxShape3D_x8p52")
