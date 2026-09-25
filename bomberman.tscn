@@ -16,15 +16,34 @@ visible = false
 joueur = 1
 
 [node name="Player2Label" type="Label" parent="." unique_id=193826176]
-offset_left = 931.0
-offset_top = 4.0
-offset_right = 1146.0
-offset_bottom = 27.0
+offset_left = 471.0
+offset_top = 622.0
+offset_right = 686.0
+offset_bottom = 645.0
 text = "Joueur 2 : appuie sur Entrée"
 
 [node name="VieLabel" type="Label" parent="." unique_id=1701860909]
-offset_right = 40.0
-offset_bottom = 23.0
+anchors_preset = -1
+anchor_left = 0.224
+anchor_top = 0.016
+anchor_right = 0.224
+anchor_bottom = 0.016
+offset_left = -255.048
+offset_top = -11.368
+offset_right = -215.048
+offset_bottom = 11.632
+text = "Vie :"
+
+[node name="VieLabelJ2" type="Label" parent="." unique_id=62434578]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.018000001
+anchor_right = 0.5
+anchor_bottom = 0.018000001
+offset_left = 486.0
+offset_top = -13.6640005
+offset_right = 526.0
+offset_bottom = 9.3359995
 text = "Vie :"
 
 [node name="BoutonTest" type="Button" parent="." unique_id=1650127428]
@@ -34,8 +53,12 @@ offset_right = 43.0
 offset_bottom = 69.0
 text = "Dmg"
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2080651433]
-transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0)
+[node name="BoutonTestJ2" type="Button" parent="." unique_id=1380070040]
+offset_left = 1078.0
+offset_top = 32.0
+offset_right = 1122.0
+offset_bottom = 72.0
+text = "Dmg"
 
 [node name="MapGrid" type="GridMap" parent="." unique_id=740874890]
 mesh_library = ExtResource("3_ejw18")
@@ -44,3 +67,19 @@ data = {
 "cells": PackedInt32Array(65536, 65535, 2, 65536, 65534, 2, 65536, 65533, 1, 131071, 65534, 1, 131071, 65533, 1, 65537, 65534, 2, 65537, 65535, 2, 65537, 0, 1, 65536, 0, 2, 65536, 1, 2, 65537, 1, 2, 65538, 1, 1, 65538, 0, 1, 65538, 65535, 2, 65538, 65534, 2, 65539, 65534, 2, 65539, 65535, 2, 65539, 0, 1, 65539, 1, 2, 65539, 2, 2, 65538, 2, 1, 65537, 2, 2, 65536, 2, 0, 65540, 65534, 2, 65540, 65535, 2, 65540, 0, 2, 65540, 1, 2, 65539, 3, 2, 65538, 3, 2, 65537, 3, 2, 65536, 3, 2, 131071, 65535, 1, 131071, 0, 1, 131071, 1, 1, 131071, 2, 1, 131071, 3, 1, 131071, 4, 1, 65536, 4, 1, 65537, 4, 1, 65538, 4, 1, 65537, 65533, 1, 65538, 65533, 1, 65539, 65533, 1, 65540, 65533, 1, 65541, 65533, 1, 65541, 65534, 1, 65541, 65535, 1, 65541, 0, 1, 65541, 1, 1, 65541, 2, 1, 65541, 3, 1, 65540, 4, 1, 65539, 4, 1, 65541, 4, 1, 65540, 2, 2, 65540, 3, 2)
 }
 metadata/_editor_floor_ = Vector3(0, 1, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1290665924]
+transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 4.5, 6)
+light_energy = 0.5
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="." unique_id=880132165]
+transform = Transform3D(0.11652136, 0.6384091, -0.76082623, 1.043265e-09, 0.76604444, 0.6427877, 0.9931882, -0.07489849, 0.08926053, -4.5, 4.5, 0)
+light_energy = 0.5
+
+[node name="DirectionalLight3D3" type="DirectionalLight3D" parent="." unique_id=1283420136]
+transform = Transform3D(-0.029604714, -0.64250594, 0.76570857, -6.726888e-10, 0.7660443, 0.64278764, -0.99956155, 0.019029668, -0.022678435, 5.5, 4.5, 0)
+light_energy = 0.5
+
+[node name="DirectionalLight3D4" type="DirectionalLight3D" parent="." unique_id=1804559871]
+transform = Transform3D(-0.029604714, -0.64250594, 0.76570857, -6.726888e-10, 0.7660443, 0.64278764, -0.99956155, 0.019029668, -0.022678435, 0, 4.5, -5)
+light_energy = 0.5
