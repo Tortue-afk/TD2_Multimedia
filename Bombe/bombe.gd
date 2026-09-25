@@ -76,10 +76,10 @@ func _analyser_case(pos: Vector3) -> String:
 
 	for res in resultats:
 		var corps = res["collider"]
-		if corps.is_in_group(indestructible):
+		if corps.is_in_group(GROUPE_MUR_INDESTRUCTIBLE):
 			return "indestructible"
-		elif corps.is_in_group(destructible):
-			corps.queue_free() # US09 : le mur disparaît
+		elif corps.is_in_group(GROUPE_MUR_DESTRUCTIBLE):
+			corps.queue_free() 
 			return "destructible"
 		elif corps.is_in_group(GROUPE_JOUEUR):
 			if corps.has_method("subir_degats"):
