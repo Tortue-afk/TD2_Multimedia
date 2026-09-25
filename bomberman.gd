@@ -58,7 +58,6 @@ func _on_joueur_mort() -> void:
 		return
 
 	if not joueur2_actif:
-		# Solo : toujours une défaite
 		partie_terminee = true
 		Resultat.vies_j1 = joueur.vies
 		Resultat.multijoueur = false
@@ -66,7 +65,6 @@ func _on_joueur_mort() -> void:
 		get_tree().change_scene_to_file("res://game_over.tscn")
 		return
 
-	# Multijoueur : il y a forcément un résultat
 	var j1_vivant : bool = joueur.vies > 0
 	var j2_vivant : bool = joueur2.vies > 0
 
@@ -76,7 +74,7 @@ func _on_joueur_mort() -> void:
 		_terminer_partie("J2")
 	elif not j1_vivant and not j2_vivant:
 		_terminer_partie("Egalite")
-	# si les deux sont encore vivants, ce signal venait d'un joueur qui a encore des vies : rien à faire
+	
 
 func _terminer_partie(vainqueur: String) -> void:
 	partie_terminee = true

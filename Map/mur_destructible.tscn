@@ -15,7 +15,7 @@ material = SubResource("StandardMaterial3D_bxc3v")
 [node name="MeshMurDestructible" type="MeshInstance3D" unique_id=1765692000]
 mesh = SubResource("BoxMesh_3uo7q")
 
-[node name="MurDestructible" type="StaticBody3D" parent="." unique_id=646659064]
+[node name="MurDestructible" type="StaticBody3D" parent="." unique_id=646659064 groups=["mur_destructible"]]
 script = ExtResource("1_e18dr")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MurDestructible" unique_id=1976248427]

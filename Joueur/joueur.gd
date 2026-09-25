@@ -105,10 +105,23 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func poser_bombe() -> void:
 	var bombe: Bombe = BombeScene.instantiate()
-	get_tree().current_scene.add_child(bombe)
-
 	var taille_case := bombe.taille_case
+
 	var case_x = (floor(global_position.x / taille_case) + 0.5) * taille_case
 	var case_z = (floor(global_position.z / taille_case) + 0.5) * taille_case
-	print("joueur=", global_position, " case_x=", case_x, " case_z=", case_z, " taille_case=", taille_case)
-	bombe.global_position = Vector3(case_x, global_position.y, case_z)
+
+	var avant := -global_transform.basis.z
+	var direction: Vector3
+	if abs(avant.x) > abs(avant.z):
+		direction = Vector3(sign(avant.x), 0, 0)
+	else:
+		direction = Vector3(0, 0, sign(avant.z))
+
+	var pos_devant := Vector3(case_x, global_position.y, case_z) + direction * taille_case
+
+	if Bombe.case_contient_mur(pos_devant, get_world_3d(), taille_case):
+		bombe.queue_free()  
+		return
+
+	get_tree().current_scene.add_child(bombe)
+	bombe.global_position = pos_devant

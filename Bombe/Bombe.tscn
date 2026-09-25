@@ -5,6 +5,7 @@
 
 [node name="Bombe" type="Node3D" unique_id=219107326]
 script = ExtResource("1")
+taille_case = 1.0
 
 [node name="Timer" type="Timer" parent="." unique_id=81145767]
 wait_time = 2.0

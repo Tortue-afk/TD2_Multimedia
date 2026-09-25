@@ -18,7 +18,27 @@ const GROUPE_JOUEUR := "joueur"
 
 signal bombe_explosee(position_globale: Vector3)
 
+static func case_contient_mur(pos: Vector3, monde: World3D, taille: float) -> bool:
+	var space_state := monde.direct_space_state
+	var params := PhysicsShapeQueryParameters3D.new()
+	var forme := BoxShape3D.new()
+	forme.size = Vector3(taille * 0.9, 100.0, taille * 0.9)
+	params.shape = forme
+	params.transform = Transform3D(Basis(), pos)
+	params.collide_with_bodies = true
+	params.collide_with_areas = true
+
+	var resultats := space_state.intersect_shape(params, 8)
+	for res in resultats:
+		var corps = res["collider"]
+		if corps.is_in_group(GROUPE_MUR_INDESTRUCTIBLE) or corps.is_in_group(GROUPE_MUR_DESTRUCTIBLE):
+			return true
+	return false
+
 func _ready() -> void:
+	if texture_bombe:
+		_appliquer_texture(texture_bombe)
+
 	timer.wait_time = delai_explosion
 	timer.one_shot = true
 	timer.timeout.connect(_on_timeout)
@@ -49,12 +69,12 @@ func exploser() -> void:
 			var resultat := _analyser_case(pos_case)
 
 			if resultat == "indestructible":
-				break # US08 : la case n'est pas ajoutée, propagation stoppée
+				break 
 
 			cases_touchees.append(pos_case)
 
 			if resultat == "destructible":
-				break # US09 : mur détruit, mais l'explosion ne va pas plus loin
+				break
 
 	for pos in cases_touchees:
 		_declencher_effet_case(pos)
@@ -66,7 +86,7 @@ func _analyser_case(pos: Vector3) -> String:
 	var space_state := get_world_3d().direct_space_state
 	var params := PhysicsShapeQueryParameters3D.new()
 	var forme := BoxShape3D.new()
-	forme.size = Vector3(taille_case * 0.9, 2.0, taille_case * 0.9)
+	forme.size = Vector3(taille_case * 0.9, 100.0, taille_case * 0.9)
 	params.shape = forme
 	params.transform = Transform3D(Basis(), pos)
 	params.collide_with_areas = true

@@ -10,11 +10,11 @@ uv1_triplanar = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x8p52"]
 
-[node name="MeshMurIndestructible" type="MeshInstance3D" unique_id=1765692000 groups=["indestructible"]]
+[node name="MeshMurIndestructible" type="MeshInstance3D" unique_id=1765692000]
 mesh = SubResource("BoxMesh_3uo7q")
 surface_material_override/0 = SubResource("StandardMaterial3D_0xo4g")
 
-[node name="MurIndestructible" type="StaticBody3D" parent="." unique_id=646659064]
+[node name="MurIndestructible" type="StaticBody3D" parent="." unique_id=646659064 groups=["indestructible"]]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MurIndestructible" unique_id=1976248427]
 shape = SubResource("BoxShape3D_x8p52")
