@@ -1,9 +1,23 @@
 extends Control
 
 @onready var titre: Label = $Label
+@onready var vies_label: Label = $VieLabelResultat
 @onready var bouton_rejouer: Button = $BoutonRejouer
 
 func _ready() -> void:
+	if Resultat.multijoueur:
+		match Resultat.vainqueur:
+			"J1":
+				titre.text = "JOUEUR 1 GAGNE !"
+			"J2":
+				titre.text = "JOUEUR 2 GAGNE !"
+			"Egalite":
+				titre.text = "ÉGALITÉ"
+		vies_label.text = "J1 : %d vies    J2 : %d vies" % [Resultat.vies_j1, Resultat.vies_j2]
+	else:
+		titre.text = "VICTOIRE !"
+		vies_label.text = "Vies restantes : %d" % Resultat.vies_j1
+
 	bouton_rejouer.pressed.connect(_on_rejouer_pressed)
 	bouton_rejouer.grab_focus()
 	_animer_titre()
