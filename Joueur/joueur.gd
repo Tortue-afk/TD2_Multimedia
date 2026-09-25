@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+const BombeScene := preload("res://Bombe/Bombe.tscn")
+
 @export_enum("Joueur 1", "Joueur 2") var joueur := 0
 
 signal vie_perdue(vies_restantes: int)
@@ -96,3 +98,17 @@ func activer() -> void:
 	process_mode = Node.PROCESS_MODE_INHERIT
 	collision_layer = _layer_initial
 	collision_mask = _mask_initial
+	
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.keycode == KEY_SPACE and event.pressed and not event.echo:
+		poser_bombe()
+
+func poser_bombe() -> void:
+	var bombe: Bombe = BombeScene.instantiate()
+	get_tree().current_scene.add_child(bombe)
+
+	var taille_case := bombe.taille_case
+	var case_x = (floor(global_position.x / taille_case) + 0.5) * taille_case
+	var case_z = (floor(global_position.z / taille_case) + 0.5) * taille_case
+	print("joueur=", global_position, " case_x=", case_x, " case_z=", case_z, " taille_case=", taille_case)
+	bombe.global_position = Vector3(case_x, global_position.y, case_z)
