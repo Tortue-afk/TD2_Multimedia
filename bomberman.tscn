@@ -91,10 +91,8 @@ data = {
 }
 metadata/_editor_floor_ = Vector3(0, 1, 0)
 
-<<<<<<< HEAD
 [node name="Ennemi" parent="." unique_id=1020023865 instance=ExtResource("4_i4k5q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.5, -1.1)
-=======
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1290665924]
 transform = Transform3D(1, 0, 0, 0, 0.76604444, 0.6427876, 0, -0.6427876, 0.76604444, 0, 4.5, 6)
 light_energy = 0.5
@@ -110,4 +108,3 @@ light_energy = 0.5
 [node name="DirectionalLight3D4" type="DirectionalLight3D" parent="." unique_id=1804559871]
 transform = Transform3D(-0.029604714, -0.64250594, 0.76570857, -6.726888e-10, 0.7660443, 0.64278764, -0.99956155, 0.019029668, -0.022678435, 0, 4.5, -5)
 light_energy = 0.5
->>>>>>> fee92eb0e24342b6380f457ec1c7b6b2c6ab0ea3
