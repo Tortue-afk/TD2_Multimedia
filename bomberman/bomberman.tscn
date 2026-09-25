@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://dqmcr6qhr4p40" path="res://Joueur/joueur.tscn" id="1_3uo7q"]
 [ext_resource type="Script" uid="uid://cx086qwufwxs8" path="res://bomberman.gd" id="1_fhfjk"]
-[ext_resource type="MeshLibrary" uid="uid://cfd1v5rdc0ioa" path="res://Map/map_library.meshlib" id="4_i4k5q"]
+[ext_resource type="MeshLibrary" uid="uid://bd000w0jakn7m" path="res://Map/mesh_library.res" id="3_ejw18"]
 
 [node name="Bomberman" type="Node3D" unique_id=1386755976]
 script = ExtResource("1_fhfjk")
@@ -38,7 +38,7 @@ text = "Dmg"
 transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 0, 0)
 
 [node name="MapGrid" type="GridMap" parent="." unique_id=740874890]
-mesh_library = ExtResource("4_i4k5q")
+mesh_library = ExtResource("3_ejw18")
 cell_size = Vector3(1, 1, 1)
 data = {
 "cells": PackedInt32Array(65536, 65535, 2, 65536, 65534, 2, 65536, 65533, 1, 131071, 65534, 1, 131071, 65533, 1, 65537, 65534, 2, 65537, 65535, 2, 65537, 0, 1, 65536, 0, 2, 65536, 1, 2, 65537, 1, 2, 65538, 1, 1, 65538, 0, 1, 65538, 65535, 2, 65538, 65534, 2, 65539, 65534, 2, 65539, 65535, 2, 65539, 0, 1, 65539, 1, 2, 65539, 2, 2, 65538, 2, 1, 65537, 2, 2, 65536, 2, 0, 65540, 65534, 2, 65540, 65535, 2, 65540, 0, 2, 65540, 1, 2, 65539, 3, 2, 65538, 3, 2, 65537, 3, 2, 65536, 3, 2, 131071, 65535, 1, 131071, 0, 1, 131071, 1, 1, 131071, 2, 1, 131071, 3, 1, 131071, 4, 1, 65536, 4, 1, 65537, 4, 1, 65538, 4, 1, 65537, 65533, 1, 65538, 65533, 1, 65539, 65533, 1, 65540, 65533, 1, 65541, 65533, 1, 65541, 65534, 1, 65541, 65535, 1, 65541, 0, 1, 65541, 1, 1, 65541, 2, 1, 65541, 3, 1, 65540, 4, 1, 65539, 4, 1, 65541, 4, 1, 65540, 2, 2, 65540, 3, 2)
