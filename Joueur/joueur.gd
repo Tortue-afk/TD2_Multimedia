@@ -19,6 +19,7 @@ var _layer_initial: int
 var _mask_initial: int
 
 var action_bombe := "ui_accept"
+var bombe_posee: Bombe = null
 
 @onready var animated_sprite_3d = $AnimatedSprite3D
 
@@ -108,8 +109,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		poser_bombe()
 
 func poser_bombe() -> void:
-	if vies <= 0:
-		return
+	if vies <= 0 or is_instance_valid(bombe_posee):
+		return   # mort, ou sa bombe précédente n'a pas encore explosé
 
 	var bombe: Bombe = BombeScene.instantiate()
 	var taille_case := bombe.taille_case
@@ -121,3 +122,4 @@ func poser_bombe() -> void:
 
 	get_tree().current_scene.add_child(bombe)
 	bombe.global_position = pos_case
+	bombe_posee = bombe

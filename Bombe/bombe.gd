@@ -17,6 +17,9 @@ class_name Bombe
 
 var joueurs_touches: Array[Node] = []
 
+const GROUPE_ENNEMI := "ennemi"
+var ennemis_touches: Array[Node] = []
+
 const GROUPE_MUR_INDESTRUCTIBLE := "mur_indestructible"
 const GROUPE_MUR_DESTRUCTIBLE := "mur_destructible"
 const GROUPE_JOUEUR := "joueur"
@@ -105,7 +108,6 @@ func _analyser_case(pos: Vector3) -> String:
 			var item := grille.get_cell_item(cellule)
 			if item == GridMap.INVALID_CELL_ITEM:
 				continue
-			print("GridMap : item ", item, " en ", cellule)   # temporaire
 			if item in items_indestructibles:
 				return "indestructible"
 			if item in items_destructibles:

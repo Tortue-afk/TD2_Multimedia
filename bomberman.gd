@@ -5,8 +5,6 @@ extends Node3D
 @onready var vie_label: Label = $VieLabel
 @onready var vie_label_j2: Label = $VieLabelJ2
 @onready var player2_label: Label = $Player2Label
-@onready var bouton_test: Button = $BoutonTest
-@onready var bouton_test_j2: Button = $BoutonTestJ2
 
 var temps_clignotement := 0.0
 var joueur2_actif := false
@@ -16,14 +14,11 @@ func _ready() -> void:
 	joueur2.desactiver()
 	player2_label.visible = true
 	vie_label_j2.visible = false
-	bouton_test_j2.visible = false
 
 	_maj_vies(joueur.vies)
 	joueur.vie_perdue.connect(_maj_vies)
 	joueur.mort.connect(_on_joueur_mort)
 	joueur2.mort.connect(_on_joueur_mort)
-	bouton_test.pressed.connect(joueur.perdre_vie)
-	bouton_test_j2.pressed.connect(joueur2.perdre_vie)
 
 func _process(delta: float) -> void:
 	if joueur2_actif:
@@ -41,7 +36,6 @@ func _activer_joueur2() -> void:
 	joueur2_actif = true
 	joueur2.activer()
 	player2_label.visible = false
-	bouton_test_j2.visible = true
 
 	vie_label_j2.visible = true
 	_maj_vies_j2(joueur2.vies)
