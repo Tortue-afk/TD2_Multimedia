@@ -76,7 +76,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1mpg8")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_back",
 "speed": 5.0
 }, {
@@ -87,7 +87,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4k3p5")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_front",
 "speed": 5.0
 }, {
@@ -98,7 +98,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iy7a6")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_left",
 "speed": 5.0
 }, {
@@ -109,7 +109,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6pdtf")
 }],
-"loop": true,
+"loop": 1,
 "name": &"idle_right",
 "speed": 5.0
 }, {
@@ -120,7 +120,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x8a0q")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run_bottom",
 "speed": 5.0
 }, {
@@ -131,7 +131,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kywmy")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run_left",
 "speed": 5.0
 }, {
@@ -142,7 +142,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aoa1h")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run_right",
 "speed": 5.0
 }, {
@@ -153,13 +153,13 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x56n0")
 }],
-"loop": true,
+"loop": 1,
 "name": &"run_top",
 "speed": 5.0
 }]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_x8p52"]
-size = Vector3(0.5, 0.9, 0.9)
+size = Vector3(0.7246094, 0.9, 0.8303894)
 
 [node name="Joueur" type="CharacterBody3D" unique_id=2103547942]
 collision_layer = 4
@@ -174,8 +174,8 @@ transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
 billboard = 1
 texture_filter = 0
 sprite_frames = SubResource("SpriteFrames_x8p52")
-animation = &"run_left"
-frame_progress = 0.8566561
+animation = &"idle_back"
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1778704387]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0029296875, 0, 0.0004669428)
 shape = SubResource("BoxShape3D_x8p52")

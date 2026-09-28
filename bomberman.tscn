@@ -26,16 +26,13 @@ environment = SubResource("Environment_x8p52")
 transform = Transform3D(25.549044, 0, 0, 0, 1, 0, 0, 0, 22.639488, 0, 0, 0)
 mesh = SubResource("PlaneMesh_x8p52")
 
-[node name="Joueur" parent="." unique_id=2103547942 instance=ExtResource("1_3uo7q")]
+[node name="Joueur" parent="." unique_id=2103547942 groups=["joueur"] instance=ExtResource("1_3uo7q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, 1.5)
-joueur = null
-vies_max = null
 
-[node name="Joueur2" parent="." unique_id=1039252776 instance=ExtResource("1_3uo7q")]
+[node name="Joueur2" parent="." unique_id=1039252776 groups=["joueur"] instance=ExtResource("1_3uo7q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, 1.5)
 visible = false
 joueur = 1
-vies_max = null
 
 [node name="Player2Label" type="Label" parent="." unique_id=193826176]
 anchors_preset = 7
@@ -67,20 +64,6 @@ offset_right = -5.0
 offset_bottom = 28.0
 grow_horizontal = 0
 text = "Vie :"
-
-[node name="BoutonTest" type="Button" parent="." unique_id=1650127428]
-offset_left = -1.0
-offset_top = 29.0
-offset_right = 43.0
-offset_bottom = 69.0
-text = "Dmg"
-
-[node name="BoutonTestJ2" type="Button" parent="." unique_id=1380070040]
-offset_left = 1078.0
-offset_top = 32.0
-offset_right = 1122.0
-offset_bottom = 72.0
-text = "Dmg"
 
 [node name="MapGrid" type="GridMap" parent="." unique_id=740874890]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5, 0)

@@ -18,15 +18,20 @@ var actif := true
 var _layer_initial: int
 var _mask_initial: int
 
+var action_bombe := "ui_accept"
+var bombe_posee: Bombe = null
+
 @onready var animated_sprite_3d = $AnimatedSprite3D
 
 func _ready() -> void:
 	if joueur == 1:
 		animated_sprite_3d.modulate = Color(0.3, 0.6, 1.0)
 		prefixe_input = "p2"
+		action_bombe = "p2_action"
 	else:
 		animated_sprite_3d.modulate = Color.WHITE
 		prefixe_input = "ui"
+		action_bombe = "p1_action"
 
 	vies = vies_max
 	position_depart = global_position
@@ -100,28 +105,21 @@ func activer() -> void:
 	collision_mask = _mask_initial
 	
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.keycode == KEY_SPACE and event.pressed and not event.echo:
+	if event.is_action_pressed(action_bombe):
 		poser_bombe()
 
 func poser_bombe() -> void:
+	if vies <= 0 or is_instance_valid(bombe_posee):
+		return   # mort, ou sa bombe précédente n'a pas encore explosé
+
 	var bombe: Bombe = BombeScene.instantiate()
 	var taille_case := bombe.taille_case
 
-	var case_x = (floor(global_position.x / taille_case) + 0.5) * taille_case
-	var case_z = (floor(global_position.z / taille_case) + 0.5) * taille_case
-
-	var avant := -global_transform.basis.z
-	var direction: Vector3
-	if abs(avant.x) > abs(avant.z):
-		direction = Vector3(sign(avant.x), 0, 0)
-	else:
-		direction = Vector3(0, 0, sign(avant.z))
-
-	var pos_devant := Vector3(case_x, global_position.y, case_z) + direction * taille_case
-
-	if Bombe.case_contient_mur(pos_devant, get_world_3d(), taille_case):
-		bombe.queue_free()  
-		return
+	var pos_case := Vector3(
+		(floor(global_position.x / taille_case) + 0.5) * taille_case,
+		global_position.y,
+		(floor(global_position.z / taille_case) + 0.5) * taille_case)
 
 	get_tree().current_scene.add_child(bombe)
-	bombe.global_position = pos_devant
+	bombe.global_position = pos_case
+	bombe_posee = bombe
