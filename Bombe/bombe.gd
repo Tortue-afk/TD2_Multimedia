@@ -2,15 +2,12 @@ extends Node3D
 class_name Bombe
 
 @export var taille_case: float = 2.0
-
 @export var portee: int = 1
-
 @export var delai_explosion: float = 2.0
-
 @export var texture_bombe: Texture2D
-
 @export var items_indestructibles: Array[int] = [1]
 @export var items_destructibles: Array[int] = [0]
+@export var nom_tuile_sol: String = "MeshSol"
 
 @onready var timer: Timer = $Timer
 @onready var mesh: Sprite3D = $Sprite3D
@@ -99,7 +96,6 @@ func _grille() -> GridMap:
 	return get_tree().current_scene.get_node_or_null("MapGrid") as GridMap
 	
 func _analyser_case(pos: Vector3) -> String:
-	# 1) Les murs : lus directement dans le GridMap
 	var grille := _grille()
 	if grille:
 		var c := grille.local_to_map(grille.to_local(pos))
@@ -111,10 +107,12 @@ func _analyser_case(pos: Vector3) -> String:
 			if item in items_indestructibles:
 				return "indestructible"
 			if item in items_destructibles:
+				var id_sol := grille.mesh_library.find_item_by_name(nom_tuile_sol)
 				grille.set_cell_item(cellule, GridMap.INVALID_CELL_ITEM)
+				if id_sol != -1:
+					grille.set_cell_item(cellule, id_sol)
 				return "destructible"
 
-	# 2) Les joueurs présents dans la case
 	var params := PhysicsShapeQueryParameters3D.new()
 	var forme := BoxShape3D.new()
 	forme.size = Vector3(taille_case * 0.9, 100.0, taille_case * 0.9)
@@ -142,16 +140,13 @@ func _declencher_effet_case(pos: Vector3) -> void:
 	mat.emission_energy_multiplier = 2.0
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	flamme.material_override = mat
-
-	# Dans la scène, pas dans la bombe : la bombe est supprimée juste après l'explosion
+	
 	get_tree().current_scene.add_child(flamme)
 	flamme.global_position = pos + Vector3(0, 0.2, 0)
 	flamme.scale = Vector3(0.2, 0.2, 0.2)
 	flamme.visible = false
 
-	# Les flammes partent du centre et s'étendent vers l'extérieur
 	var delai := pos.distance_to(global_position) / taille_case * 0.06
-
 	var tween := flamme.create_tween()
 	tween.tween_interval(delai)
 	tween.tween_callback(flamme.show)
