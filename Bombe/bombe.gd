@@ -65,8 +65,9 @@ func _on_timeout() -> void:
 
 func exploser() -> void:
 	joueurs_touches.clear()
+	ennemis_touches.clear()
 	var cases_touchees: Array[Vector3] = [global_position]
-	_analyser_case(global_position)   # la case de la bombe est touchée aussi
+	_analyser_case(global_position)   
 
 	var directions := [Vector3.FORWARD, Vector3.BACK, Vector3.LEFT, Vector3.RIGHT]
 
@@ -88,6 +89,10 @@ func exploser() -> void:
 
 	for j in joueurs_touches:
 		j.perdre_vie()
+
+	for e in ennemis_touches:
+		if is_instance_valid(e):
+			e.mourir()
 
 	bombe_explosee.emit(global_position)
 	queue_free()
@@ -113,6 +118,7 @@ func _analyser_case(pos: Vector3) -> String:
 					grille.set_cell_item(cellule, id_sol)
 				return "destructible"
 
+		
 	var params := PhysicsShapeQueryParameters3D.new()
 	var forme := BoxShape3D.new()
 	forme.size = Vector3(taille_case * 0.9, 100.0, taille_case * 0.9)
@@ -124,6 +130,8 @@ func _analyser_case(pos: Vector3) -> String:
 		var corps = res["collider"]
 		if corps.is_in_group(GROUPE_JOUEUR) and not joueurs_touches.has(corps):
 			joueurs_touches.append(corps)
+		elif corps.is_in_group(GROUPE_ENNEMI) and not ennemis_touches.has(corps):
+			ennemis_touches.append(corps)
 
 	return "libre"
 

@@ -111,3 +111,6 @@ func verifier_contact():
 	for corps in zone_contact.get_overlapping_bodies():
 		if corps.has_method("perdre_vie"):
 			corps.perdre_vie()
+			
+func mourir():
+	queue_free()
