@@ -2,14 +2,19 @@ extends CharacterBody3D
 
 var grille: GridMap
 @export var vitesse = 2.0
+@export var chance_pause = 0.3
+@export var duree_pause_min = 0.5
+@export var duree_pause_max = 1.5
 
 const DIRECTIONS = [Vector3.RIGHT, Vector3.LEFT, Vector3.FORWARD, Vector3.BACK]
 
 var cible = Vector3.ZERO
 var en_mouvement = false
+var en_pause = false
 var derniere_direction = Vector3.ZERO
 
 @onready var animated_sprite_3d = $AnimatedSprite3D
+@onready var zone_contact = $ZoneContact
 
 
 func _ready():
@@ -20,15 +25,21 @@ func _ready():
 
 
 func _physics_process(delta):
+	verifier_contact()
+	if en_pause:
+		velocity = Vector3.ZERO
+		move_and_slide()
+		return
+		
 	if not en_mouvement:
 		choisir_prochaine_case()
 		animated_sprite_3d.play("idle_front")
 		return
+		
 
 	var vers_cible = cible - global_position
 	vers_cible.y = 0
 
-	# Animation selon la direction
 	if abs(vers_cible.x) > abs(vers_cible.z):
 		if vers_cible.x > 0:
 			animated_sprite_3d.play("run_right")
@@ -68,11 +79,17 @@ func _physics_process(delta):
 
 
 func choisir_prochaine_case():
+	if randf() < chance_pause:
+		en_pause = true
+		var duree = randf_range(duree_pause_min, duree_pause_max)
+		await get_tree().create_timer(duree).timeout
+		en_pause = false
+		return
+
 	var taille = grille.cell_size.x
 	var candidates = DIRECTIONS.duplicate()
 	candidates.shuffle()
 
-	# On évite de faire demi-tour, sauf en cul-de-sac
 	if candidates.has(-derniere_direction):
 		candidates.erase(-derniere_direction)
 		candidates.append(-derniere_direction)
@@ -89,3 +106,8 @@ func centre_de_case(pos: Vector3) -> Vector3:
 	var case_grille = grille.local_to_map(grille.to_local(pos))
 	var centre = grille.to_global(grille.map_to_local(case_grille))
 	return Vector3(centre.x, global_position.y, centre.z)
+	
+func verifier_contact():
+	for corps in zone_contact.get_overlapping_bodies():
+		if corps.has_method("perdre_vie"):
+			corps.perdre_vie()

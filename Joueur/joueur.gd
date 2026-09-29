@@ -77,7 +77,12 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+var invincible := false
+
 func perdre_vie() -> void:
+	if invincible:
+		return
+
 	vies -= 1
 	vie_perdue.emit(vies)
 	if vies <= 0:
@@ -85,6 +90,9 @@ func perdre_vie() -> void:
 		mort.emit()
 	else:
 		reapparaitre()
+		invincible = true
+		await get_tree().create_timer(1.0).timeout
+		invincible = false
 
 func reapparaitre() -> void:
 	velocity = Vector3.ZERO
