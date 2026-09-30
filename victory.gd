@@ -11,12 +11,15 @@ func _ready() -> void:
 				titre.text = "JOUEUR 1 GAGNE !"
 			"J2":
 				titre.text = "JOUEUR 2 GAGNE !"
-			"Egalite":
-				titre.text = "ÉGALITÉ"
-		vies_label.text = "J1 : %d vies    J2 : %d vies" % [Resultat.vies_j1, Resultat.vies_j2]
+			"ScoreEgal":
+				titre.text = "SCORE ÉGAL !"
+			_:
+				titre.text = "VICTOIRE !"
+		vies_label.text = "J1 : %d vies, %d pts    J2 : %d vies, %d pts" % \
+			[Resultat.vies_j1, Resultat.score_j1, Resultat.vies_j2, Resultat.score_j2]
 	else:
 		titre.text = "VICTOIRE !"
-		vies_label.text = "Vies restantes : %d" % Resultat.vies_j1
+		vies_label.text = "Vies restantes : %d    Score : %d" % [Resultat.vies_j1, Resultat.score_j1]
 
 	bouton_rejouer.pressed.connect(_on_rejouer_pressed)
 	bouton_rejouer.grab_focus()
