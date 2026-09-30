@@ -2,6 +2,7 @@ extends Control
 
 @onready var titre: Label = $Label
 @onready var vies_label: Label = $VieLabelResultat
+@onready var raison_label: Label = $RaisonLabel
 @onready var bouton_rejouer: Button = $BoutonRejouer
 
 func _ready() -> void:
@@ -20,6 +21,8 @@ func _ready() -> void:
 	else:
 		titre.text = "VICTOIRE !"
 		vies_label.text = "Vies restantes : %d    Score : %d" % [Resultat.vies_j1, Resultat.score_j1]
+
+	raison_label.text = Resultat.raison
 
 	bouton_rejouer.pressed.connect(_on_rejouer_pressed)
 	bouton_rejouer.grab_focus()

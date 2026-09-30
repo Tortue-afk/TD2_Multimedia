@@ -6,3 +6,4 @@ var score_j1 := 0
 var score_j2 := 0
 var multijoueur := false
 var vainqueur := ""
+var raison := ""

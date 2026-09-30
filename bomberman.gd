@@ -104,8 +104,11 @@ func _terminer_partie(vainqueur: String) -> void:
 
 	Resultat.vies_j1 = joueur.vies
 	Resultat.vies_j2 = joueur2.vies
+	Resultat.score_j1 = joueur.score
+	Resultat.score_j2 = joueur2.score
 	Resultat.multijoueur = true
 	Resultat.vainqueur = vainqueur
+	Resultat.raison = "L'adversaire a perdu toutes ses vies"
 
 	await get_tree().create_timer(1.0).timeout
 	get_tree().change_scene_to_file("res://victory.tscn")
@@ -130,10 +133,15 @@ func _victoire_ennemis_elimines() -> void:
 	if joueur2_actif:
 		if joueur.score > joueur2.score:
 			Resultat.vainqueur = "J1"
+			Resultat.raison = "Tous les ennemis éliminés - Meilleur score"
 		elif joueur2.score > joueur.score:
 			Resultat.vainqueur = "J2"
+			Resultat.raison = "Tous les ennemis éliminés - Meilleur score"
 		else:
 			Resultat.vainqueur = "ScoreEgal"
+			Resultat.raison = "Tous les ennemis éliminés - Mcore à égalité"
+	else:
+		Resultat.raison = "Tous les ennemis ont été éliminés"
 
 	await get_tree().create_timer(1.0).timeout
 	get_tree().change_scene_to_file("res://victory.tscn")
