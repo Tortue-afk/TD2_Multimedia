@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://dq7avnixtnscr" path="res://Bombe/bombe.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://bn86ketu0o8o8" path="res://assets/Sprout Lands - Sprites - Basic pack/Objects/Basic Grass Biom things 1.png" id="2_aq0km"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_aq0km"]
+size = Vector3(0.8, 0.8, 0.8)
+
 [node name="Bombe" type="Node3D" unique_id=219107326]
 script = ExtResource("1")
 taille_case = 1.0
@@ -18,3 +21,9 @@ texture_filter = 0
 texture = ExtResource("2_aq0km")
 region_enabled = true
 region_rect = Rect2(98.66669, 1.0222454, 12.666687, 15.641876)
+
+[node name="Solide" type="StaticBody3D" parent="." unique_id=321119620]
+collision_layer = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Solide" unique_id=303840072]
+shape = SubResource("BoxShape3D_aq0km")

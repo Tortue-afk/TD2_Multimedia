@@ -8,9 +8,15 @@ class_name Bombe
 @export var items_indestructibles: Array[int] = [1]
 @export var items_destructibles: Array[int] = [0]
 @export var nom_tuile_sol: String = "MeshSol"
+@export var vitesse_glissement: float = 6.0
 
 @onready var timer: Timer = $Timer
 @onready var mesh: Sprite3D = $Sprite3D
+@onready var solide: StaticBody3D = $Solide
+
+var glissante := false
+var direction_glissement := Vector3.ZERO
+var cible_glissement := Vector3.ZERO
 
 var joueurs_touches: Array[Node] = []
 
@@ -43,6 +49,12 @@ static func case_contient_mur(pos: Vector3, monde: World3D, taille: float) -> bo
 	return false
 
 func _ready() -> void:
+	solide.get_child(0).disabled = true
+	get_tree().create_timer(0.4).timeout.connect(func():
+		if is_instance_valid(self):
+			solide.get_child(0).disabled = false
+	)
+
 	if texture_bombe:
 		_appliquer_texture(texture_bombe)
 
@@ -69,7 +81,7 @@ func exploser() -> void:
 	joueurs_touches.clear()
 	ennemis_touches.clear()
 	var cases_touchees: Array[Vector3] = [global_position]
-	_analyser_case(global_position)   
+	_analyser_case(global_position)
 
 	var directions := [Vector3.FORWARD, Vector3.BACK, Vector3.LEFT, Vector3.RIGHT]
 
@@ -106,7 +118,7 @@ func exploser() -> void:
 
 func _grille() -> GridMap:
 	return get_tree().current_scene.get_node_or_null("MapGrid") as GridMap
-	
+
 func _analyser_case(pos: Vector3) -> String:
 	var grille := _grille()
 	if grille:
@@ -125,7 +137,6 @@ func _analyser_case(pos: Vector3) -> String:
 					grille.set_cell_item(cellule, id_sol)
 				return "destructible"
 
-		
 	var params := PhysicsShapeQueryParameters3D.new()
 	var forme := BoxShape3D.new()
 	forme.size = Vector3(taille_case * 0.9, 100.0, taille_case * 0.9)
@@ -155,7 +166,7 @@ func _declencher_effet_case(pos: Vector3) -> void:
 	mat.emission_energy_multiplier = 2.0
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	flamme.material_override = mat
-	
+
 	get_tree().current_scene.add_child(flamme)
 	flamme.global_position = pos + Vector3(0, 0.2, 0)
 	flamme.scale = Vector3(0.2, 0.2, 0.2)
@@ -176,3 +187,53 @@ func _animer_clignotement() -> void:
 	tween.set_loops()
 	tween.tween_property(mesh, "scale", base * 1.15, 0.3)
 	tween.tween_property(mesh, "scale", base, 0.3)
+
+func pousser(direction: Vector3) -> void:
+	if glissante:
+		return
+
+	var dir := Vector3.ZERO
+	if abs(direction.x) > abs(direction.z):
+		dir = Vector3(sign(direction.x), 0, 0)
+	else:
+		dir = Vector3(0, 0, sign(direction.z))
+
+	_tenter_avancer(dir)
+
+func _tenter_avancer(dir: Vector3) -> void:
+	var prochaine := global_position + dir * taille_case
+	if _case_bloquee(prochaine):
+		exploser()
+		return
+
+	direction_glissement = dir
+	cible_glissement = prochaine
+	glissante = true
+
+func _case_bloquee(pos: Vector3) -> bool:
+	var grille := _grille()
+	if not grille:
+		return false
+	var c := grille.local_to_map(grille.to_local(pos))
+	for y in range(c.y - 2, c.y + 3):
+		var item := grille.get_cell_item(Vector3i(c.x, y, c.z))
+		if item == GridMap.INVALID_CELL_ITEM:
+			continue
+		if item in items_indestructibles or item in items_destructibles:
+			return true
+	return false
+
+func _physics_process(delta: float) -> void:
+	if not glissante:
+		return
+
+	var vers_cible := cible_glissement - global_position
+	vers_cible.y = 0
+
+	if vers_cible.length() <= vitesse_glissement * delta:
+		global_position.x = cible_glissement.x
+		global_position.z = cible_glissement.z
+		glissante = false
+		_tenter_avancer(direction_glissement)
+	else:
+		global_position += vers_cible.normalized() * vitesse_glissement * delta
