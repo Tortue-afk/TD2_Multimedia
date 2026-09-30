@@ -6,9 +6,10 @@ extends Control
 
 func _ready() -> void:
 	if Resultat.multijoueur:
-		vies_label.text = "J1 : %d vies    J2 : %d vies" % [Resultat.vies_j1, Resultat.vies_j2]
+		vies_label.text = "J1 : %d vies, %d pts    J2 : %d vies, %d pts" % \
+			[Resultat.vies_j1, Resultat.score_j1, Resultat.vies_j2, Resultat.score_j2]
 	else:
-		vies_label.text = "Vies restantes : %d" % Resultat.vies_j1
+		vies_label.text = "Vies restantes : %d    Score : %d" % [Resultat.vies_j1, Resultat.score_j1]
 
 	bouton_rejouer.pressed.connect(_on_rejouer_pressed)
 	bouton_rejouer.grab_focus()

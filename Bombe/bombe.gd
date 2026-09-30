@@ -29,6 +29,8 @@ const GROUPE_JOUEUR := "joueur"
 
 signal bombe_explosee(position_globale: Vector3)
 
+var proprietaire: Node = null
+
 static func case_contient_mur(pos: Vector3, monde: World3D, taille: float) -> bool:
 	var space_state := monde.direct_space_state
 	var params := PhysicsShapeQueryParameters3D.new()
@@ -105,6 +107,11 @@ func exploser() -> void:
 	for e in ennemis_touches:
 		if is_instance_valid(e):
 			e.mourir()
+
+	if ennemis_touches.size() > 0:
+		var niveau := get_tree().current_scene
+		if niveau.has_method("_on_ennemis_tues"):
+			niveau._on_ennemis_tues(proprietaire, ennemis_touches.size())
 
 	bombe_explosee.emit(global_position)
 	queue_free()

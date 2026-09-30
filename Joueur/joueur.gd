@@ -21,6 +21,8 @@ var _mask_initial: int
 var action_bombe := "ui_accept"
 var bombe_posee: Bombe = null
 
+signal score_change(score: int)
+var score: int = 0
 var invincible := false
 
 @onready var animated_sprite_3d = $AnimatedSprite3D
@@ -131,4 +133,11 @@ func poser_bombe() -> void:
 
 	get_tree().current_scene.add_child(bombe)
 	bombe.global_position = pos_case
+	bombe.proprietaire = self
 	bombe_posee = bombe
+	bombe.global_position = pos_case
+	bombe_posee = bombe
+
+func ajouter_score(points: int) -> void:
+	score += points
+	score_change.emit(score)
