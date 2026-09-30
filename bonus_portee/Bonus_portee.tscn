@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://2xlxvovggdbv"]
+
+[ext_resource type="Texture2D" uid="uid://b88voi0dd14vk" path="res://assets/kenney_block-pack/PNG/Default (64px)/box_treasure.png" id="2_lyw4g"]
+[ext_resource type="Script" uid="uid://cho5c8sl22s4c" path="res://bonus_portee/bonus_portee.gd" id="3_lyw4g"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_80kg4"]
+size = Vector3(0.3001709, 0.3371582, 0.3751831)
+
+[node name="Bonus_porte" type="Area3D" unique_id=1633587622]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("3_lyw4g")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=812732089]
+billboard = 1
+texture = ExtResource("2_lyw4g")
+region_enabled = true
+region_rect = Rect2(14.666687, 71.66667, 31.333344, 28.333328)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1728252555]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.006652832, -0.008911133, 0.010528564)
+shape = SubResource("BoxShape3D_80kg4")

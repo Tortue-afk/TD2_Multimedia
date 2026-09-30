@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://cjifkpb252aee" path="res://spawn_murs_destructibles.gd" id="5_40ey5"]
 [ext_resource type="Script" uid="uid://yioyneykemo1" path="res://spawn_ennemis.gd" id="5_b8muj"]
 [ext_resource type="Script" uid="uid://dkuilemf4hthn" path="res://camera_partagee.gd" id="7_40ey5"]
+[ext_resource type="PackedScene" uid="uid://dp05cb0yyvmut" path="res://bonus_+1/Bonus.tscn" id="9_elxtf"]
+[ext_resource type="PackedScene" uid="uid://2xlxvovggdbv" path="res://bonus_portee/Bonus_portee.tscn" id="10_e3hmq"]
 
 [sub_resource type="Environment" id="Environment_x8p52"]
 background_mode = 1
@@ -28,10 +30,10 @@ environment = SubResource("Environment_x8p52")
 transform = Transform3D(78.16433, 0, 0, 0, 3.0593836, 0, 0, 0, 69.26288, 0, 0, 0)
 mesh = SubResource("PlaneMesh_x8p52")
 
-[node name="Joueur" parent="." unique_id=2103547942 groups=["joueur"] instance=ExtResource("1_3uo7q")]
+[node name="Joueur" parent="." unique_id=2103547942 instance=ExtResource("1_3uo7q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, 1.5)
 
-[node name="Joueur2" parent="." unique_id=1039252776 groups=["joueur"] instance=ExtResource("1_3uo7q")]
+[node name="Joueur2" parent="." unique_id=1039252776 instance=ExtResource("1_3uo7q")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.5, 0.5, 13.51)
 visible = false
 joueur = 1
@@ -128,3 +130,9 @@ hauteur_par_defaut = 0.5
 
 [node name="CameraPartagee" type="Camera3D" parent="." unique_id=1560983567]
 script = ExtResource("7_40ey5")
+
+[node name="Bonus +1" parent="." unique_id=1633587622 instance=ExtResource("9_elxtf")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.5, 0.5, 4)
+
+[node name="Bonus_porte" parent="." unique_id=1141346409 instance=ExtResource("10_e3hmq")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 3.5, 0.5, 1.5)
