@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://do6riloxs5b6a" path="res://herbe.png" id="2_i4k5q"]
 [ext_resource type="MeshLibrary" uid="uid://bd000w0jakn7m" path="res://Map/mesh_library.res" id="3_ejw18"]
 [ext_resource type="PackedScene" uid="uid://yy8qyxlxhno6" path="res://Ennemi/ennemi.tscn" id="4_i4k5q"]
+[ext_resource type="Script" uid="uid://cjifkpb252aee" path="res://spawn_murs_destructibles.gd" id="5_40ey5"]
 [ext_resource type="Script" uid="uid://yioyneykemo1" path="res://spawn_ennemis.gd" id="5_b8muj"]
 
 [sub_resource type="Environment" id="Environment_x8p52"]
@@ -89,6 +90,11 @@ light_energy = 0.5
 [node name="DirectionalLight3D4" type="DirectionalLight3D" parent="." unique_id=1804559871]
 transform = Transform3D(-0.029604714, -0.64250594, 0.76570857, -6.726888e-10, 0.7660443, 0.64278764, -0.99956155, 0.019029668, -0.022678435, 0, 4.5, -5)
 light_energy = 0.5
+
+[node name="SpawnMursDestructibles" type="Node3D" parent="." unique_id=829716964 node_paths=PackedStringArray("grille")]
+script = ExtResource("5_40ey5")
+grille = NodePath("../MapGrid")
+nom_tuile_mur_destructible = "MurDestructible"
 
 [node name="SpawnEnnemis" type="Node3D" parent="." unique_id=1773678300 node_paths=PackedStringArray("grille")]
 script = ExtResource("5_b8muj")
