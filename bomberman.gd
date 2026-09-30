@@ -84,7 +84,7 @@ func _on_joueur_mort() -> void:
 		partie_terminee = true
 		Resultat.vies_j1 = joueur.vies
 		Resultat.multijoueur = false
-		await get_tree().create_timer(1.0).timeout
+		
 		get_tree().change_scene_to_file("res://game_over.tscn")
 		return
 
@@ -110,7 +110,6 @@ func _terminer_partie(vainqueur: String) -> void:
 	Resultat.vainqueur = vainqueur
 	Resultat.raison = "L'adversaire a perdu toutes ses vies"
 
-	await get_tree().create_timer(1.0).timeout
 	get_tree().change_scene_to_file("res://victory.tscn")
 
 func _on_ennemis_tues(qui: Node, nb: int) -> void:
@@ -143,6 +142,5 @@ func _victoire_ennemis_elimines() -> void:
 	else:
 		Resultat.raison = "Tous les ennemis ont été éliminés"
 
-	await get_tree().create_timer(1.0).timeout
 	get_tree().change_scene_to_file("res://victory.tscn")
 	

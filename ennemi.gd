@@ -16,6 +16,7 @@ var derniere_direction = Vector3.ZERO
 @onready var animated_sprite_3d = $AnimatedSprite3D
 @onready var zone_contact = $ZoneContact
 
+var deja_mort := false
 
 func _ready():
 	grille = get_tree().current_scene.get_node("MapGrid")
@@ -113,4 +114,6 @@ func verifier_contact():
 			corps.perdre_vie()
 			
 func mourir():
-	queue_free()
+	if deja_mort or not is_inside_tree():
+		return
+	deja_mort = true

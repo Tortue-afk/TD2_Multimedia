@@ -31,6 +31,8 @@ signal bombe_explosee(position_globale: Vector3)
 
 var proprietaire: Node = null
 
+var a_explose := false
+
 static func case_contient_mur(pos: Vector3, monde: World3D, taille: float) -> bool:
 	var space_state := monde.direct_space_state
 	var params := PhysicsShapeQueryParameters3D.new()
@@ -51,7 +53,7 @@ static func case_contient_mur(pos: Vector3, monde: World3D, taille: float) -> bo
 func _ready() -> void:
 	solide.get_child(0).disabled = true
 	get_tree().create_timer(0.4).timeout.connect(func():
-		if is_instance_valid(self):
+		if is_instance_valid(self) and is_inside_tree():
 			solide.get_child(0).disabled = false
 	)
 
@@ -78,6 +80,10 @@ func _on_timeout() -> void:
 	exploser()
 
 func exploser() -> void:
+	if a_explose or not is_inside_tree():
+		return
+	a_explose = true
+	
 	joueurs_touches.clear()
 	ennemis_touches.clear()
 	var cases_touchees: Array[Vector3] = [global_position]
@@ -113,7 +119,8 @@ func exploser() -> void:
 		if niveau.has_method("_on_ennemis_tues"):
 			niveau._on_ennemis_tues(proprietaire, ennemis_touches.size())
 
-	bombe_explosee.emit(global_position)
+	if is_inside_tree():
+		bombe_explosee.emit(global_position)
 	queue_free()
 
 func _grille() -> GridMap:
@@ -224,7 +231,7 @@ func _case_bloquee(pos: Vector3) -> bool:
 	return false
 
 func _physics_process(delta: float) -> void:
-	if not glissante:
+	if not glissante or a_explose:
 		return
 
 	var vers_cible := cible_glissement - global_position
