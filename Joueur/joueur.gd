@@ -21,6 +21,8 @@ var _mask_initial: int
 var action_bombe := "ui_accept"
 var bombe_posee: Bombe = null
 
+var invincible := false
+
 @onready var animated_sprite_3d = $AnimatedSprite3D
 
 func _ready() -> void:
@@ -39,15 +41,12 @@ func _ready() -> void:
 	_mask_initial = collision_mask
 
 func _physics_process(delta: float) -> void:
-	# Direction voulue par ce joueur (touches selon l'enum)
 	var input_dir := Input.get_vector(
 		prefixe_input + "_left", prefixe_input + "_right",
 		prefixe_input + "_up", prefixe_input + "_down")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
-	# Mettre à jour les animations en fonction de la direction
 	if direction != Vector3.ZERO:
-		# Le personnage est en mouvement
 		if input_dir.y > 0:
 			animated_sprite_3d.play("run_bottom")
 		elif input_dir.y < 0:
@@ -57,7 +56,6 @@ func _physics_process(delta: float) -> void:
 		elif input_dir.x < 0:
 			animated_sprite_3d.play("run_left")
 	else:
-		# Le personnage est immobile
 		if animated_sprite_3d.animation == "run_bottom":
 			animated_sprite_3d.play("idle_front")
 		elif animated_sprite_3d.animation == "run_right":
@@ -67,7 +65,6 @@ func _physics_process(delta: float) -> void:
 		elif animated_sprite_3d.animation == "run_top":
 			animated_sprite_3d.play("idle_back")
 
-	# Gérer le mouvement
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -77,7 +74,11 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
-var invincible := false
+	for i in get_slide_collision_count():
+		var collision := get_slide_collision(i)
+		var corps = collision.get_collider()
+		if is_instance_valid(bombe_posee) and corps == bombe_posee.get_node("Solide"):
+			bombe_posee.pousser(-collision.get_normal())
 
 func perdre_vie() -> void:
 	if invincible:
@@ -111,14 +112,14 @@ func activer() -> void:
 	process_mode = Node.PROCESS_MODE_INHERIT
 	collision_layer = _layer_initial
 	collision_mask = _mask_initial
-	
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(action_bombe):
 		poser_bombe()
 
 func poser_bombe() -> void:
 	if vies <= 0 or is_instance_valid(bombe_posee):
-		return   # mort, ou sa bombe précédente n'a pas encore explosé
+		return
 
 	var bombe: Bombe = BombeScene.instantiate()
 	var taille_case := bombe.taille_case
