@@ -25,18 +25,18 @@ func _ready() -> void:
 	joueur.vie_perdue.connect(_maj_vies)
 	joueur.mort.connect(_on_joueur_mort)
 	joueur2.mort.connect(_on_joueur_mort)
-	
+
 	_maj_score(0)
 	joueur.score_change.connect(_maj_score)
 
 	call_deferred("_compter_ennemis")
-	
+
 	camera_partagee.joueur = joueur
 	camera_partagee.joueur2 = joueur2
 
-func _compter_ennemis() -> void:          # ← ICI, comme fonction du niveau
+func _compter_ennemis() -> void:
 	ennemis_restants = get_tree().get_nodes_in_group("ennemi").size()
-	
+
 func _process(delta: float) -> void:
 	if joueur2_actif:
 		return
@@ -61,7 +61,7 @@ func _activer_joueur2() -> void:
 	score_label_j2.visible = true
 	_maj_score_j2(0)
 	joueur2.score_change.connect(_maj_score_j2)
-	
+
 	camera_partagee.activer(true)
 
 func _maj_vies(vies: int) -> void:
@@ -69,7 +69,7 @@ func _maj_vies(vies: int) -> void:
 
 func _maj_vies_j2(vies: int) -> void:
 	vie_label_j2.text = "J2 - Vies : %d" % vies
-	
+
 func _maj_score(score: int) -> void:
 	score_label.text = "J1 - Score : %d" % score
 
@@ -84,8 +84,8 @@ func _on_joueur_mort() -> void:
 		partie_terminee = true
 		Resultat.vies_j1 = joueur.vies
 		Resultat.multijoueur = false
-		
-		get_tree().change_scene_to_file("res://game_over.tscn")
+
+		call_deferred("_changer_scene", "res://game_over.tscn")
 		return
 
 	var j1_vivant : bool = joueur.vies > 0
@@ -97,7 +97,7 @@ func _on_joueur_mort() -> void:
 		_terminer_partie("J2")
 	elif not j1_vivant and not j2_vivant:
 		_terminer_partie("Egalite")
-	
+
 
 func _terminer_partie(vainqueur: String) -> void:
 	partie_terminee = true
@@ -110,7 +110,7 @@ func _terminer_partie(vainqueur: String) -> void:
 	Resultat.vainqueur = vainqueur
 	Resultat.raison = "L'adversaire a perdu toutes ses vies"
 
-	get_tree().change_scene_to_file("res://victory.tscn")
+	call_deferred("_changer_scene", "res://victory.tscn")
 
 func _on_ennemis_tues(qui: Node, nb: int) -> void:
 	if qui and qui.has_method("ajouter_score"):
@@ -142,5 +142,7 @@ func _victoire_ennemis_elimines() -> void:
 	else:
 		Resultat.raison = "Tous les ennemis ont été éliminés"
 
-	get_tree().change_scene_to_file("res://victory.tscn")
-	
+	call_deferred("_changer_scene", "res://victory.tscn")
+
+func _changer_scene(chemin: String) -> void:
+	get_tree().change_scene_to_file(chemin)

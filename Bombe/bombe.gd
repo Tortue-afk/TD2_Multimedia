@@ -13,6 +13,7 @@ class_name Bombe
 @onready var timer: Timer = $Timer
 @onready var mesh: Sprite3D = $Sprite3D
 @onready var solide: StaticBody3D = $Solide
+@onready var zone_detection_ennemi: Area3D = $ZoneDetectionEnnemi
 
 var glissante := false
 var direction_glissement := Vector3.ZERO
@@ -50,12 +51,17 @@ static func case_contient_mur(pos: Vector3, monde: World3D, taille: float) -> bo
 			return true
 	return false
 
+func _on_ennemi_touche(corps: Node) -> void:
+	if a_explose:
+		return
+	exploser()
+
 func _ready() -> void:
+	add_to_group("bombe")
 	solide.get_child(0).disabled = true
-	get_tree().create_timer(0.4).timeout.connect(func():
-		if is_instance_valid(self) and is_inside_tree():
-			solide.get_child(0).disabled = false
-	)
+	_tenter_activer_collision()
+
+	zone_detection_ennemi.body_entered.connect(_on_ennemi_touche)
 
 	if texture_bombe:
 		_appliquer_texture(texture_bombe)
@@ -65,6 +71,23 @@ func _ready() -> void:
 	timer.timeout.connect(_on_timeout)
 	timer.start()
 	_animer_clignotement()
+
+func _tenter_activer_collision() -> void:
+	get_tree().create_timer(0.4).timeout.connect(func():
+		if not is_instance_valid(self) or not is_inside_tree() or a_explose:
+			return
+		var occupee := false
+		for corps in get_tree().get_nodes_in_group("joueur"):
+			var ecart: Vector3 = corps.global_position - global_position
+			ecart.y = 0
+			if ecart.length() < taille_case * 0.45:
+				occupee = true
+				break
+		if occupee:
+			_tenter_activer_collision()
+		else:
+			solide.get_child(0).disabled = false
+	)
 
 func set_texture(tex: Texture2D) -> void:
 	texture_bombe = tex
@@ -80,10 +103,13 @@ func _on_timeout() -> void:
 	exploser()
 
 func exploser() -> void:
-	if a_explose or not is_inside_tree():
+	if a_explose:
 		return
 	a_explose = true
-	
+
+	if not is_inside_tree():
+		return
+
 	joueurs_touches.clear()
 	ennemis_touches.clear()
 	var cases_touchees: Array[Vector3] = [global_position]
@@ -142,6 +168,7 @@ func _analyser_case(pos: Vector3) -> String:
 				grille.set_cell_item(cellule, GridMap.INVALID_CELL_ITEM)
 				if id_sol != -1:
 					grille.set_cell_item(cellule, id_sol)
+				_faire_apparaitre_bonus(cellule, pos)
 				return "destructible"
 
 	var params := PhysicsShapeQueryParameters3D.new()
@@ -159,6 +186,21 @@ func _analyser_case(pos: Vector3) -> String:
 			ennemis_touches.append(corps)
 
 	return "libre"
+
+func _faire_apparaitre_bonus(cellule: Vector3i, pos: Vector3) -> void:
+	var spawn_mur := get_tree().current_scene.get_node_or_null("SpawnMursDestructibles")
+	if not spawn_mur:
+		return
+
+	var scene_bonus: PackedScene = spawn_mur.bonus_pour_case(cellule)
+	if scene_bonus == null:
+		return
+
+	spawn_mur.retirer_bonus(cellule)
+
+	var bonus := scene_bonus.instantiate()
+	get_tree().current_scene.add_child(bonus)
+	bonus.global_position = Vector3(pos.x, pos.y, pos.z)
 
 func _declencher_effet_case(pos: Vector3) -> void:
 	var flamme := MeshInstance3D.new()
@@ -219,19 +261,32 @@ func _tenter_avancer(dir: Vector3) -> void:
 
 func _case_bloquee(pos: Vector3) -> bool:
 	var grille := _grille()
-	if not grille:
-		return false
-	var c := grille.local_to_map(grille.to_local(pos))
-	for y in range(c.y - 2, c.y + 3):
-		var item := grille.get_cell_item(Vector3i(c.x, y, c.z))
-		if item == GridMap.INVALID_CELL_ITEM:
+	if grille:
+		var c := grille.local_to_map(grille.to_local(pos))
+		for y in range(c.y - 2, c.y + 3):
+			var item := grille.get_cell_item(Vector3i(c.x, y, c.z))
+			if item == GridMap.INVALID_CELL_ITEM:
+				continue
+			if item in items_indestructibles or item in items_destructibles:
+				return true
+
+	return _autre_bombe_sur_case(pos)
+
+func _autre_bombe_sur_case(pos: Vector3) -> bool:
+	for bombe in get_tree().get_nodes_in_group("bombe"):
+		if bombe == self or not is_instance_valid(bombe):
 			continue
-		if item in items_indestructibles or item in items_destructibles:
+		var ecart: Vector3 = bombe.global_position - pos
+		ecart.y = 0
+		if ecart.length() < taille_case * 0.5:
 			return true
 	return false
 
 func _physics_process(delta: float) -> void:
-	if not glissante or a_explose:
+	if a_explose:
+		return
+
+	if not glissante:
 		return
 
 	var vers_cible := cible_glissement - global_position

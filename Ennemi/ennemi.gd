@@ -26,17 +26,22 @@ func _ready():
 
 
 func _physics_process(delta):
+	if not is_inside_tree() or deja_mort:
+		return
+
 	verifier_contact()
+	if not is_inside_tree() or deja_mort:
+		return
+
 	if en_pause:
 		velocity = Vector3.ZERO
 		move_and_slide()
 		return
-		
+
 	if not en_mouvement:
 		choisir_prochaine_case()
 		animated_sprite_3d.play("idle_front")
 		return
-		
 
 	var vers_cible = cible - global_position
 	vers_cible.y = 0
@@ -52,13 +57,11 @@ func _physics_process(delta):
 		else:
 			animated_sprite_3d.play("run_top")
 
-	# Arrivé au centre de la case
 	if vers_cible.length() <= vitesse * delta:
 		global_position.x = cible.x
 		global_position.z = cible.z
 		en_mouvement = false
 
-		# Animation idle correspondant à la dernière direction
 		if derniere_direction == Vector3.RIGHT:
 			animated_sprite_3d.play("idle_right")
 		elif derniere_direction == Vector3.LEFT:
@@ -73,17 +76,24 @@ func _physics_process(delta):
 	velocity = vers_cible.normalized() * vitesse
 	move_and_slide()
 
-	# Quelque chose bloque le chemin
+	if not is_inside_tree() or deja_mort:
+		return
+
 	if get_slide_collision_count() > 0:
 		cible = centre_de_case(global_position)
 		en_mouvement = true
 
 
 func choisir_prochaine_case():
+	if not is_inside_tree() or deja_mort:
+		return
+
 	if randf() < chance_pause:
 		en_pause = true
 		var duree = randf_range(duree_pause_min, duree_pause_max)
 		await get_tree().create_timer(duree).timeout
+		if not is_inside_tree() or deja_mort:
+			return
 		en_pause = false
 		return
 
@@ -96,6 +106,8 @@ func choisir_prochaine_case():
 		candidates.append(-derniere_direction)
 
 	for dir in candidates:
+		if not is_inside_tree() or deja_mort:
+			return
 		if not test_move(global_transform, dir * taille):
 			cible = centre_de_case(global_position + dir * taille)
 			derniere_direction = dir
@@ -107,13 +119,18 @@ func centre_de_case(pos: Vector3) -> Vector3:
 	var case_grille = grille.local_to_map(grille.to_local(pos))
 	var centre = grille.to_global(grille.map_to_local(case_grille))
 	return Vector3(centre.x, global_position.y, centre.z)
-	
+
+
 func verifier_contact():
+	if not is_inside_tree() or deja_mort:
+		return
 	for corps in zone_contact.get_overlapping_bodies():
 		if corps.has_method("perdre_vie"):
 			corps.perdre_vie()
-			
+
+
 func mourir():
 	if deja_mort or not is_inside_tree():
 		return
 	deja_mort = true
+	queue_free()

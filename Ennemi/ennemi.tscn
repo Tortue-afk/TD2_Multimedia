@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://yy8qyxlxhno6"]
 
-[ext_resource type="Script" uid="uid://2x21c27ssova" path="res://ennemi.gd" id="1_su0b7"]
+[ext_resource type="Script" uid="uid://2x21c27ssova" path="res://Ennemi/ennemi.gd" id="1_su0b7"]
 [ext_resource type="Texture2D" uid="uid://ch5hpu4fsex6c" path="res://assets/Sprout Lands - Sprites - Basic pack/Characters/Basic Charakter Spritesheet.png" id="2_ppl12"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5lqua"]
@@ -79,7 +79,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_1mpg8")
 }],
-"loop": 1,
+"loop": true,
 "name": &"idle_back",
 "speed": 5.0
 }, {
@@ -90,7 +90,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_4k3p5")
 }],
-"loop": 1,
+"loop": true,
 "name": &"idle_front",
 "speed": 5.0
 }, {
@@ -101,7 +101,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_iy7a6")
 }],
-"loop": 1,
+"loop": true,
 "name": &"idle_left",
 "speed": 5.0
 }, {
@@ -112,7 +112,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_6pdtf")
 }],
-"loop": 1,
+"loop": true,
 "name": &"idle_right",
 "speed": 5.0
 }, {
@@ -123,7 +123,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x8a0q")
 }],
-"loop": 1,
+"loop": true,
 "name": &"run_bottom",
 "speed": 5.0
 }, {
@@ -134,7 +134,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_kywmy")
 }],
-"loop": 1,
+"loop": true,
 "name": &"run_left",
 "speed": 5.0
 }, {
@@ -145,7 +145,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_aoa1h")
 }],
-"loop": 1,
+"loop": true,
 "name": &"run_right",
 "speed": 5.0
 }, {
@@ -156,7 +156,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_x56n0")
 }],
-"loop": 1,
+"loop": true,
 "name": &"run_top",
 "speed": 5.0
 }]
@@ -166,6 +166,7 @@ size = Vector3(0.725, 0.9, 0.83)
 
 [node name="Ennemi" type="CharacterBody3D" unique_id=1020023865 groups=["ennemi"]]
 collision_layer = 2
+collision_mask = 9
 script = ExtResource("1_su0b7")
 vitesse = 1.0
 

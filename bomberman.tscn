@@ -120,6 +120,7 @@ light_energy = 0.5
 script = ExtResource("5_40ey5")
 grille = NodePath("../MapGrid")
 nom_tuile_mur_destructible = "MurDestructible"
+scenes_bonus = Array[PackedScene]([ExtResource("9_elxtf"), ExtResource("10_e3hmq")])
 
 [node name="SpawnEnnemis" type="Node3D" parent="." unique_id=1773678300 node_paths=PackedStringArray("grille")]
 script = ExtResource("5_b8muj")
@@ -130,9 +131,3 @@ hauteur_par_defaut = 0.5
 
 [node name="CameraPartagee" type="Camera3D" parent="." unique_id=1560983567]
 script = ExtResource("7_40ey5")
-
-[node name="Bonus +1" parent="." unique_id=1633587622 instance=ExtResource("9_elxtf")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 1.5, 0.5, 4)
-
-[node name="Bonus_porte" parent="." unique_id=1141346409 instance=ExtResource("10_e3hmq")]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 3.5, 0.5, 1.5)
